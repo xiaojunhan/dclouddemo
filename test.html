@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <style>
+    	.link-area {
+			display: block;
+			margin-top: 25px;
+			text-align: center;
+		}
+		.spliter {
+			color: #bbb;
+			padding: 0px 8px;
+		}
+	</style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">test</h1>
+	</header>
+	<div class="mui-content">
+		<div class="mui-content-padded">
+			<button id='test' class="mui-btn mui-btn-block mui-btn-primary">测试</button>
+			<div class="link-area">
+				<a id='test1'>test1预加载</a> <span class="spliter">|</span> <a id='test2'>test2预加载自定义事件</a>
+			</div>
+		</div>
+		<div class="mui-content-padded">
+			<div class="link-area">
+				<a id='test3'>test3直接跳转</a> <span class="spliter">|</span> <a id='test4'>test4直接跳转手动显示</a>
+			</div>
+		</div>
+		<div class="mui-content-padded">
+			<div class="link-area">
+				<a id='test5'>二维码</a> <span class="spliter">|</span> <a id='test6'></a>
+			</div>
+		</div>
+		<div class="mui-content-padded" id="msgdiv">
+		</div>
+	</div>
+	<script src="js/mui.min.js"></script>
+	<script type="text/javascript" charset="utf-8">
+      	mui.init();
+      	console.log("test init");
+      	mui.plusReady(function(){
+      		console.log("test plus ready");
+      		showAllViews();
+			setTimeout(function() {
+				//关闭 splash
+				plus.navigator.closeSplashscreen();
+			}, 600);
+			mui.preload({
+				"id": 'test1',
+				"url": 'html/test1.html',
+				extras:{//这种方式有效
+      				name:"韩晓军-preload",
+      				phone:"13812042761-preload"
+    			 },
+			});
+			mui.preload({
+				"id": 'test2',
+				"url": 'html/test2.html'
+			});
+      	});
+      	document.getElementById("test").addEventListener("tap",function(){
+      		showAllViews();
+      	});
+      	//预加载
+      	document.getElementById("test1").addEventListener("tap",function(){
+      		console.log("test1 tap");
+      		mui.openWindow({
+      			"id": 'test1',
+      			extras:{ //这种方式无效
+      				name:"韩晓军4444",
+      				phone:"138120427614444"
+    			 },
+      		});
+      	});
+      	//预加载 自定义事件
+      	document.getElementById("test2").addEventListener("tap",function(){
+      		console.log("test2 tap");
+      		
+      		var targetPage = plus.webview.getWebviewById("test2");
+      		mui.fire(targetPage,'show',{
+			    name:"韩晓军test2",
+      			phone:"13812042761test2"
+			});
+			mui.openWindow({
+      			"id": 'test2'
+      		});
+      	});
+      	//直接访问
+      	document.getElementById("test3").addEventListener("tap",function(){
+      		console.log("test3 tap");
+      		mui.openWindow({
+      			"id": 'test3',
+      			"url":"html/test3.html",
+      			extras:{
+      				name:"韩晓军",
+      				phone:"13812042761"
+    			},
+    			waiting:{
+      				autoShow:false
+    			}
+      		});
+      	});
+      	//直接访问 等test4页面都处理好了再手动显示
+      	document.getElementById("test4").addEventListener("tap",function(){
+      		console.log("test4 tap");
+      		mui.openWindow({
+      			"id": 'test4',
+      			"url":"html/test4.html",
+      			show:{
+				      autoShow:false
+				}
+    			 
+      		});
+      	});
+      	document.getElementById("test5").addEventListener("tap",function(){
+      		console.log("test5 tap");
+      		 
+      	});
+      	function showAllViews(){
+      		var wvs = plus.webview.all();
+			for(var i=0;i<wvs.length;i++){
+				console.log("webview"+i+": "+wvs[i].id+"=="+wvs[i].getURL());
+			}
+      	}
+    </script>
+</body>
+</html>

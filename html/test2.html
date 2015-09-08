@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link href="../css/mui.min.css" rel="stylesheet"/>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">test2</h1>
+	</header>
+	<div class="mui-content">
+		<div class="mui-content-padded">
+			<span id='test2span'></span> 
+		</div>
+	</div>
+	<script src="../js/mui.min.js"></script>
+	<script type="text/javascript" charset="utf-8">
+      	mui.init();
+      	console.log("test2 init");
+      	mui.plusReady(function(){
+      		console.log("test2 plus ready");
+      	});
+      	window.addEventListener('show',function(event){
+		  //通过event.detail可获得传递过来的参数内容
+		    console.log("test2 show event");
+		    var name = event.detail.name;
+			var phone = event.detail.phone;
+			console.log("test2==name="+name+"==phone="+phone);
+			document.getElementById("test2span").innerText=name+"=="+phone;
+		});
+    </script>
+</body>
+</html>
