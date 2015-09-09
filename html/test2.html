@@ -13,6 +13,18 @@
 	</header>
 	<div class="mui-content">
 		<div class="mui-content-padded">
+			<button id='showwebview' class="mui-btn mui-btn-block mui-btn-primary">showwebview</button>
+		</div>
+		<div class="mui-content-padded">
+			<button id='loadmore' class="mui-btn mui-btn-block mui-btn-primary">预加载很多</button>
+		</div>
+		<div class="mui-content-padded">
+			<button id='totest1' class="mui-btn mui-btn-block mui-btn-primary">totest1</button>
+		</div>
+		<div class="mui-content-padded">
+			<button id='totest3' class="mui-btn mui-btn-block mui-btn-primary">totest3</button>
+		</div>
+		<div class="mui-content-padded">
 			<span id='test2span'></span> 
 		</div>
 	</div>
@@ -22,6 +34,11 @@
       	console.log("test2 init");
       	mui.plusReady(function(){
       		console.log("test2 plus ready");
+      		
+      		mui.preload({
+				"id": 'test3',
+				"url": 'test3.html'
+			});
       	});
       	window.addEventListener('show',function(event){
 		  //通过event.detail可获得传递过来的参数内容
@@ -31,6 +48,36 @@
 			console.log("test2==name="+name+"==phone="+phone);
 			document.getElementById("test2span").innerText=name+"=="+phone;
 		});
+		document.getElementById("totest1").addEventListener("tap",function(){
+      		console.log("totest1 tap");
+      		mui.openWindow({
+      			"id": 'test1'
+      		});
+      	});
+      	document.getElementById("totest3").addEventListener("tap",function(){
+      		console.log("totest3 tap");
+      		mui.openWindow({
+      			"id": 'test3',
+      			"url":  "test3.html"
+      		});
+      	});
+      	document.getElementById("showwebview").addEventListener("tap",function(){
+      		showAllViews();
+      	});
+      		function showAllViews(){
+      		var wvs = plus.webview.all();
+			for(var i=0;i<wvs.length;i++){
+				console.log("webview"+i+": "+wvs[i].id+"=="+wvs[i].getURL());
+			}
+      	}
+  		document.getElementById("loadmore").addEventListener("tap",function(){
+      		for(var i=23;i<=35;i++){
+      			mui.preload({
+					"id": 'test'+i,
+					"url": 'test'+i+'.html'
+				});
+      		}
+      	});
     </script>
 </body>
 </html>

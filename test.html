@@ -23,7 +23,8 @@
 	</header>
 	<div class="mui-content">
 		<div class="mui-content-padded">
-			<button id='test' class="mui-btn mui-btn-block mui-btn-primary">测试</button>
+			<button id='test' class="mui-btn mui-btn-block mui-btn-primary">showwebview</button>
+			<button id='loadmore' class="mui-btn mui-btn-block mui-btn-primary">预加载很多</button>
 			<div class="link-area">
 				<a id='test1'>test1预加载</a> <span class="spliter">|</span> <a id='test2'>test2预加载自定义事件</a>
 			</div>
@@ -35,7 +36,7 @@
 		</div>
 		<div class="mui-content-padded">
 			<div class="link-area">
-				<a id='test5'>二维码</a> <span class="spliter">|</span> <a id='test6'></a>
+				<a id='test5'>二维码</a> <span class="spliter">|</span> <a id='test6'>test6直接跳转</a>
 			</div>
 		</div>
 		<div class="mui-content-padded" id="msgdiv">
@@ -52,7 +53,16 @@
 				//关闭 splash
 				plus.navigator.closeSplashscreen();
 			}, 600);
-			mui.preload({
+			
+			//document.getElementById("loadmore").addEventListener("tap",function(){
+	      		for(var i=10;i<=22;i++){
+	      			mui.preload({
+						"id": 'test'+i,
+						"url": 'html/test'+i+'.html'
+					});
+	      		}
+	      	//});
+	      	mui.preload({
 				"id": 'test1',
 				"url": 'html/test1.html',
 				extras:{//这种方式有效
@@ -73,6 +83,7 @@
       		console.log("test1 tap");
       		mui.openWindow({
       			"id": 'test1',
+      			"url":'html/test1.html',
       			extras:{ //这种方式无效
       				name:"韩晓军4444",
       				phone:"138120427614444"
@@ -84,12 +95,18 @@
       		console.log("test2 tap");
       		
       		var targetPage = plus.webview.getWebviewById("test2");
+      		if(targetPage){
+      			console.log("targetPage not empty");
+      		}else{
+      			console.log("targetPage empty");
+      		}
       		mui.fire(targetPage,'show',{
 			    name:"韩晓军test2",
       			phone:"13812042761test2"
 			});
 			mui.openWindow({
-      			"id": 'test2'
+      			"id" : 'test2',
+      			"url":'html/test2.html',
       		});
       	});
       	//直接访问
@@ -122,6 +139,13 @@
       	document.getElementById("test5").addEventListener("tap",function(){
       		console.log("test5 tap");
       		 
+      	});
+      	document.getElementById("test6").addEventListener("tap",function(){
+      		console.log("test6 tap");
+      		mui.openWindow({
+      			"id": 'test6',
+      			"url":"html/test6.html",
+      		});
       	});
       	function showAllViews(){
       		var wvs = plus.webview.all();
