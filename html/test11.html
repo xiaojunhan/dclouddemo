@@ -15,6 +15,13 @@
 		<div class="mui-content-padded">
 			<button id='showwebview' class="mui-btn mui-btn-block mui-btn-primary">showwebview</button>
 		</div>
+		<div class="mui-content-padded">
+			<label>账号</label>
+			<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入账号">
+		</div>
+		<div class="mui-content-padded">
+			<button id='totest12' class="mui-btn mui-btn-block mui-btn-primary">totest12</button>
+		</div>
 	</div>
 		
 	<script src="../js/mui.min.js"></script>
@@ -23,6 +30,14 @@
       	console.log("test11 init");
       	mui.plusReady(function(){
       		console.log("test11 plus ready");
+      		document.getElementById("totest12").addEventListener("tap",function(){
+      		console.log("totest12 tap");
+      		mui.openWindow({
+      			"id": 'test12',
+      			"url":'test12.html',
+      		});
+      		//plus.webview.currentWebview().close();
+      	});
       	});
       	document.getElementById("showwebview").addEventListener("tap",function(){
       		showAllViews();
@@ -33,6 +48,7 @@
 				console.log("webview"+i+": "+wvs[i].id+"=="+wvs[i].getURL());
 			}
 	  	}
+  		
     </script>
 </body>
 </html>

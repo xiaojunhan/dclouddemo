@@ -15,6 +15,9 @@
 		<div class="mui-content-padded">
 			<button id='showwebview' class="mui-btn mui-btn-block mui-btn-primary">showwebview</button>
 		</div>
+		<div class="mui-content-padded">
+			<button id='totest13' class="mui-btn mui-btn-block mui-btn-primary">totest13</button>
+		</div>
 	</div>
 		
 	<script src="../js/mui.min.js"></script>
@@ -23,6 +26,13 @@
       	console.log("test12 init");
       	mui.plusReady(function(){
       		console.log("test12 plus ready");
+      		document.getElementById("totest13").addEventListener("tap",function(){
+      		console.log("totest13 tap");
+      		mui.openWindow({
+      			"id": 'test13',
+      			"url":'test13.html',
+      		});
+      	});
       	});
       	document.getElementById("showwebview").addEventListener("tap",function(){
       		showAllViews();

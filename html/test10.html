@@ -15,6 +15,15 @@
 		<div class="mui-content-padded">
 			<button id='showwebview' class="mui-btn mui-btn-block mui-btn-primary">showwebview</button>
 		</div>
+		<div class="mui-content-padded">
+			<button id='totest11' class="mui-btn mui-btn-block mui-btn-primary">totest11</button>
+		</div>
+		<div class="mui-content-padded">
+			<button id='deletetest11' class="mui-btn mui-btn-block mui-btn-primary">deletetest11</button>
+		</div>
+		<div class="mui-content-padded">
+			<button id='qrscan' class="mui-btn mui-btn-block mui-btn-primary">qrscan</button>
+		</div>
 	</div>
 		
 	<script src="../js/mui.min.js"></script>
@@ -23,6 +32,10 @@
       	console.log("test10 init");
       	mui.plusReady(function(){
       		console.log("test10 plus ready");
+      		setTimeout(function() {
+				//关闭 splash
+				plus.navigator.closeSplashscreen();
+			}, 600);
       	});
       	document.getElementById("showwebview").addEventListener("tap",function(){
       		showAllViews();
@@ -33,6 +46,55 @@
 				console.log("webview"+i+": "+wvs[i].id+"=="+wvs[i].getURL());
 			}
 	  	}
+  		document.getElementById("totest11").addEventListener("tap",function(){
+      		console.log("totest11 tap");
+      		mui.openWindow({
+//    			"id": 'test11',
+      			"url":'test11.html',
+//    			createNew:true
+      		});
+      	});
+      	document.getElementById("deletetest11").addEventListener("tap",function(){
+      		console.log("deletetest11 tap");
+ 			var v = plus.webview.getWebviewById("test11");
+ 			if(v){
+ 				v.close();
+ 				console.log("v not empty");
+ 			}else{
+				console.log("v  empty"); 				
+ 			}
+      	});
+      	document.getElementById("qrscan").addEventListener("tap",function(){
+      		console.log("qrscan tap");
+      		var qrscan = plus.webview.getWebviewById("qrscan");
+      		if(qrscan){
+      			console.log("qrscan not empty");
+      			qrscan.show();
+      			mui.fire(qrscan,'show');
+      		}else{
+      			console.log("qrscan empty");
+      			mui.openWindow({
+      				id:"qrscan",
+      				url:"qrscan.html",
+      				extras:{
+	      				qrcbfun:"qrscanCallBack2",
+    				},
+      			});
+      		}
+//    		var v = mui.preload({
+//				"id": 'qrscan',
+//				"url": 'qrscan.html'
+//			});
+//			console.log("preload ok");
+// 			v.show(); 
+      	});
+      	
+      	function qrscanCallBack(result){
+      		console.log("qrscanCallBack  result="+result);
+      	}
+      	function qrscanCallBack2(result){
+      		console.log("qrscanCallBack2 result="+result);
+      	}
     </script>
 </body>
 </html>
