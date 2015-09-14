@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/feedback-page.css" rel="stylesheet" />
+		<style>
+			 
+		</style>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">登录</h1>
+		</header>
+		<div class="mui-content feedback">
+				<p>问题和意见</p>
+				<div class="row mui-input-row">
+					<textarea id='question' class="mui-input-clear question" placeholder="请详细描述你的问题和意见..."></textarea>
+				</div>
+				<p>图片(选填,提供问题截图)</p>
+				<div class="row image-list">
+					<div id="picdiv1" class="image-item space">
+						<div class="image-close">X</div>
+						<!--<input type="file" accept="image/*" id="image-1">-->
+					</div>
+				</div>
+				<p>图片(选填,提供问题截图)</p>
+				<div class="row image-list">
+					<div class="image-item">
+						<div class="image-close">X</div>
+						<!--<input type="file" accept="image/*" id="image-1">-->
+					</div>
+				</div>
+				<p>QQ/邮箱</p>
+				<div class="mui-input-row">
+					<input id='contact' type="text" class="mui-input-clear  contact" placeholder="(选填,方便我们联系你 )" />
+				</div>
+				<button id='submit' type="button" class="mui-btn mui-btn-green">提交</button>
+			</div>
+		<script src="../js/mui.min.js"></script>
+	 
+		<script>
+		 	mui.init();
+		 	console.log("uoloadtest init");
+		 	mui.plusReady(function(){
+		 		console.log("uoloadtest plus ready");
+		 		
+		 		setTimeout(function() {
+						//关闭 splash
+						plus.navigator.closeSplashscreen();
+				}, 600);
+				
+				document.getElementById("picdiv1").addEventListener("tap",function(){
+			 		console.log("test");
+			 		var btnArray = [{
+						title: "拍照添加文件"
+					}, {
+						title: "从相册添加文件"
+					}];
+					plus.nativeUI.actionSheet({
+						cancel: "取消",
+						buttons: btnArray
+					}, function(event) {
+						var index = event.index;
+						switch (index) {
+							case 1:
+								plus.camera.getCamera().captureImage(function(p){
+									upload(p);
+								});	
+								break;
+							case 2:
+								plus.gallery.pick(function(p){
+							        upload(p);
+							    });
+								break;
+						}
+					});
+			 	});
+		 	});
+		 	
+		 	function upload(file){
+//				if(files.length<=0){
+//					plus.nativeUI.alert("没有添加上传文件！");
+//					return;
+//				}
+//				outSet("开始上传：")
+				var wt=plus.nativeUI.showWaiting();
+				var server = "http://20.uuuge.com/file/cuserimg.json";
+				var task=plus.uploader.createUpload(server,{method:"POST"},
+					function(t,status){ //上传完成
+						if(status==200){
+							console.log("上传成功："+t.responseText);
+//							plus.storage.setItem("uploader",t.responseText);
+//							var w=plus.webview.create("uploader_ret.html","uploader_ret.html",{scrollIndicator:'none',scalable:false});
+//							w.addEventListener("loaded",function(){
+//								wt.close();
+//								w.show("slide-in-right",300);
+//							},false);
+						}else{
+							console.log("上传失败："+status);
+//							wt.close();
+						}
+						wt.close();
+						plus.nativeUI.toast("上传成功");
+					}
+				);
+				console.log("file.path="+file.path);
+				task.addData("token","1231313131312");
+				task.addFile(file.path,{key:file.name,name:"test"});
+				task.start();
+			}
+		</script>
+	</body>
+
+</html>

@@ -3,4 +3,4 @@
 	filemode = false
 	logallrefupdates = true
 [remote "origin"]
-    url = https://github.com/xiaojunhan/dclouddemo
+    url = https://github.com/xiaojunhan/dclouddemoi
